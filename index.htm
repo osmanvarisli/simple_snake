@@ -1,0 +1,392 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="MobileOptimized" content="320">
+	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+</head>
+
+<body>
+<style>
+body{
+margin:0px;
+}
+	.center{
+		text-align:center;
+	}
+	.ana_cerceve ,  .dugmeler{
+		//border:1px solid #dedede;
+		position:absolute;
+		background-position-x: -15px;
+		
+	}
+	.ana_cerceve{
+		/*
+		width:100%;
+		height:100%;*/
+		background-size: 100%;
+		
+		//background-image: url("image/3310.png");
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+	.oyun{
+		width: 310px;
+		height: 160px;
+		background-color: #ebebeb;
+		border: 1px solid #dcdcdc;
+		margin: 0px 2px 2px 0;
+		box-shadow: 0px 0 2px 0px #D8D8D8;
+		border-radius: 5px;
+		position: absolute;
+		bottom: 0;
+	}
+	.ana_kare{
+		width: 310px;
+		height: 210px;
+		background-color: #3CB371;
+		position: relative;
+	}
+	.ozel_cer{
+		border: 1px solid #dcdcdc;
+		margin: 0px 2px 2px 0;
+		box-shadow: 0px 0 2px 0px #D8D8D8;
+		border-radius: 5px;
+	}
+	.score{
+		font-family: 'Lobster', Georgia, Times, serif;
+		font-size: 29px;
+		padding: 5px;
+		color: #fcfcfc;
+	}
+	.kare{
+		width:10px;
+		height:10px;
+		position:absolute; 
+		//background-color:black;
+		background:  url("image/b.png") no-repeat right top;
+		background-size:cover; 
+	}
+	#yem{
+		background:  url("image/y.png") no-repeat right top;
+		background-size:cover; 
+		border-radius: 50%;
+	}
+	#kare0{
+		left:150px;
+		top:70px;
+		
+		background:  url("image/k.png") no-repeat right top;
+		background-size:cover; 		
+	}
+	#kare1{
+		left:140px;
+		top:70px;
+	}
+	#kare2{
+		left:130px;
+		top:70px;
+	}
+	#yem{
+		background-color:green;
+	}
+	
+	
+	
+	.dugmeler{
+		width:310px;
+		height:300px;
+	}
+a.arrow-button {
+  text-align: center;
+  background-color: #eee;
+  color: #333;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.6);
+  border-radius: 8px;
+}
+.b-left{
+	float: left;
+	margin: 5px;
+	padding: 18px;
+	width: 33%;
+}
+.b-right{
+	float: left;
+	margin: 5px;
+	padding: 18px;
+	width: 33%;
+}
+.b-up{
+
+	margin: 5px;
+	padding: 18px;
+	display:block;
+	display:grid;
+	}
+.b-down{
+	margin: 5px;
+	padding: 18px;
+	display:grid;
+	}
+
+a.arrow-button:hover {
+    color: #eee;
+    background-color: #333;
+  }
+.arrow-left::before {
+    content: '\25c4';
+    padding-right: 0.5em;
+}
+
+.arrow-right::after {
+    content: '\25ba';
+    padding-left: 0.5em;
+}
+
+.arrow-down::after {
+    content: '\25bc';
+    padding-left: 0.5em;
+}
+.arrow-up::after {
+    content: '\25b2';
+    padding-left: 0.5em;
+}	
+</style>
+	<!--<div class="center"><h1>Yılan</h1></div>-->
+	<div class="ana_cerceve" id="ana_cerceve"  >
+		<div class="ana_kare ozel_cer">
+		<div class="score" id="score">Score: 0</div>
+			<div class="oyun ozel_cer" id="oyun">
+				<div class="kare" id="kare0"></div>
+				<div class="kare" id="kare1"></div>
+				<div class="kare" id="kare2"></div>
+				<div class="kare" id="yem"></div>
+			</div>
+		</div>
+		<div class="dugmeler">
+			<a href="#" class="arrow-button b-up" onclick="yon('2')" ><span class="arrow-up"></span></a>
+			<a href="#" class="arrow-button b-left" onclick="yon('4')"><span class="arrow-left"></span></a>
+			<a href="#" class="arrow-button b-right" onclick="yon('6')"><span class="arrow-right"></span></a>
+			<a href="#" class="arrow-button b-down" onclick="yon('8')"><span class="arrow-down"></span></a>
+			
+
+			<!--<div class="dugme" onclick="yon('1')">1</div>
+			<div class="dugme" onclick="yon('2')">2</div>
+			<div class="dugme" onclick="yon('3')">3</div>
+			<div class="dugme" onclick="yon('4')">4</div>
+			<div class="dugme" onclick="yon('5')">5</div>
+			<div class="dugme" onclick="yon('6')">6</div>
+			<div class="dugme" onclick="yon('7')">7</div>
+			<div class="dugme" onclick="yon('8')">8</div>
+			<div class="dugme" onclick="yon('9')">9</div>
+			-->
+		</div>
+	</div>
+	
+
+	  <script>(function () {
+  
+  var game = {
+	  element: document.getElementById("ana_cerceve"),
+	  width: 792,
+	  height: 1327
+  },
+  
+  resizeGame = function () {
+		
+	  var viewport, newGameWidth, newGameHeight, newGameX, newGameY;
+				
+	  // Get the dimensions of the viewport
+	  viewport = {
+		  width: window.innerWidth,
+		  height: window.innerHeight
+	  };
+	  
+	  // Determine game size
+	  if (game.height / game.width > viewport.height / viewport.width) {
+		newGameHeight = viewport.height;
+		newGameWidth = newGameHeight * game.width / game.height;  
+	  } else {
+		newGameWidth = viewport.width;
+		newGameHeight = newGameWidth * game.height / game.width;		 
+	  }
+	  game.element.style.width = newGameWidth + "px";
+	  game.element.style.height = newGameHeight + "px";
+	  
+	  newGameX = (viewport.width - newGameWidth) / 2;
+	  newGameY = (viewport.height - newGameHeight) / 2;
+ 
+	  // Set the new padding of the game so it will be centered
+	  game.element.style.padding = newGameY + "px " + newGameX + "px";
+	  
+  };
+  
+  window.addEventListener("resize", resizeGame);
+  resizeGame();
+}())</script>
+
+<script>
+	var git=-1; 
+	var kare_say=3,puan=0;
+	var kare=[[150,70],[140,70],[130,70]]; 
+	var hiz=200;
+	var myVar = setInterval(myTimer, hiz);
+	var alan_genislik=300,alan_yukseklik=150;
+	var yem_0,yem_1;
+	var oldun=false;
+	var bgmuzik,yemmuzik,oldunmuzik;
+	bgmuzik = new sound("sound/bg.wav");
+	yemmuzik = new sound("sound/yem.mp3");
+	//0 left
+	//1 top
+	//alert("s");
+	yem_olustur();
+	function yem_olustur(){
+		yem_0=Math.floor(Math.random() * alan_genislik/10)*10;
+		yem_1=Math.floor(Math.random() * alan_yukseklik/10)*10;
+		document.getElementById("yem").style.left = yem_0 + "px";
+		document.getElementById("yem").style.top = yem_1 + "px";
+	}
+	function myTimer() {
+		var eski_0,eksi_1,eski_0x,eski_1x;
+		//alert("");
+		if (git!=-1){
+			eski_0=kare[0][0];
+			eski_1=kare[0][1];
+			if (git==2){kare[0][1]=kare[0][1]-10;}
+			if (git==8){kare[0][1]=kare[0][1]+10;}
+			if (git==4){kare[0][0]=kare[0][0]-10;}
+			if (git==6){kare[0][0]=kare[0][0]+10;}			
+			
+			
+			bgmuzik.play();			
+		
+			for (i=1;i<kare_say;i++){
+				eski_0x=kare[i][0];
+				eski_1x=kare[i][1];
+				
+				kare[i][0]=eski_0;
+				kare[i][1]=eski_1;	
+				
+				eski_0=eski_0x;
+				eski_1=eski_1x;
+			}
+			kontrol();
+			if (!oldun){
+				for (i=0;i<kare_say;i++){
+					document.getElementById("kare"+i).style.left = kare[i][0] + "px";
+					document.getElementById("kare"+i).style.top = kare[i][1] + "px";
+				}
+			}
+			
+				
+		}
+	}
+		
+	function kontrol(){
+		//yemi yedi mi
+		if (kare[0][0]==yem_0 && kare[0][1]==yem_1){
+			function addElement(parentId, elementTag, elementId, html) {
+				var p = document.getElementById("oyun");
+				var newElement = document.createElement("div");
+				newElement.setAttribute('id', "kare"+kare_say);
+				newElement.setAttribute('class', 'kare');
+				newElement.innerHTML = html;
+				p.appendChild(newElement);
+			}
+			addElement("oyun","div","kare"+kare_say,'');
+
+			document.getElementById("kare"+kare_say).style.left = kare[kare_say-1][0] + "px";
+			document.getElementById("kare"+kare_say).style.top = kare[kare_say-1][1] + "px";	
+			
+			kare.push([kare[kare_say-1][0],kare[kare_say-1][1]]);
+			kare_say=kare_say+1;
+			
+			puan=puan+10;
+			document.getElementById("score").innerHTML = "Score : "+puan;
+
+			yem_olustur();
+			yemmuzik.play();
+			/*
+			clearInterval(myVar);
+			hiz=hiz-5;
+			myVar = setInterval(myTimer, hiz);
+			*/
+		}
+		
+		//oldümü 
+		//kadi üzerinde mi
+		for (i=1;i<kare_say;i++){
+			if (kare[0][0]==kare[i][0] && kare[0][1]==kare[i][1]){
+				alert ("öldün");
+				git=-1;
+				oldun=true;
+				bgmuzik.stop;
+				
+				var audio = new Audio('audio_file.mp3');
+				audio.play();
+			}
+		}
+		//duvara çarptımı
+		if (kare[0][0]<0 || kare[0][0]>alan_genislik || kare[0][1]<0 || kare[0][1]> alan_yukseklik){
+			alert ("öldün");
+			git=-1;
+			oldun=true;
+			bgmuzik.stop;
+		}
+		
+	}
+	
+
+		document.onkeydown = function(e) {
+			switch (e.keyCode) {
+				case 37:
+					yol=4;
+					//alert('37');
+					break;
+				case 38:
+					yol=2;
+					//alert('38');
+					break;
+				case 39:
+					yol=6;
+					//alert('39');
+					break;
+				case 40:
+					yol=8;
+					//alert('40');
+					break;
+			}
+			 yon(yol);
+		};
+
+	function yon(yol){
+		var bool=true;
+		bool=(git==2 && yol==8)||(git==8 && yol==2)||(git==6 && yol==4)||(git==4 && yol==6);
+		if (!bool){
+			git=yol;
+		}
+		
+	}
+	
+	
+	
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    }
+    this.stop = function(){
+        this.sound.pause();
+    }    
+}	
+</script>
+</body>
+</html>
